@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عداد الحب</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+    font-family: 'Kalam', cursive;
+    color: #fff;
+  }
+
+  .container {
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  }
+
+  #counter {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  .message {
+    font-size: 20px;
+    opacity: 0.9;
+    font-style: italic;
+  }
+
+  @media (max-width: 500px) {
+    #counter {
+      font-size: 24px;
+    }
+    .message {
+      font-size: 16px;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div id="counter">جاري الحساب...</div>
+  <div class="message">كل ثانية من وقتنا.. حكاية لا تنتهي</div>
+</div>
+
+<script>
+const startDate = new Date("2022-11-29T00:00:00");
+
+function updateCounter() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const seconds = Math.floor(diff / 1000) % 60;
+    const minutes = Math.floor(diff / (1000 * 60)) % 60;
+    const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const years = Math.floor(days / 365);
+
+    document.getElementById("counter").innerHTML =
+        years + " سنة • " +
+        days + " يوم • " +
+        hours + " ساعة • " +
+        minutes + " دقيقة • " +
+        seconds + " ثانية";
+}
+
+setInterval(updateCounter, 1000);
+updateCounter();
+</script>
+</body>
+</html>
