@@ -6,79 +6,68 @@
 <title>عداد الحب</title>
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #ff6ec4, #7873f5);
-    font-family: 'Kalam', cursive;
-    color: #fff;
-  }
-
-  .container {
-    text-align: center;
-    background: rgba(0,0,0,0.3);
-    padding: 40px 30px;
-    border-radius: 25px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-  }
-
-  #counter {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-  }
-
-  .message {
-    font-size: 20px;
-    opacity: 0.9;
-    font-style: italic;
-  }
-
-  @media (max-width: 500px) {
-    #counter {
-      font-size: 24px;
-    }
-    .message {
-      font-size: 16px;
-    }
-  }
+body{
+  margin:0;height:100vh;display:flex;justify-content:center;align-items:center;
+  background:linear-gradient(135deg,#ff6ec4,#7873f5);
+  font-family:'Kalam',cursive;color:#fff;text-align:center
+}
+.container{
+  background:rgba(0,0,0,.3);padding:40px 30px;border-radius:25px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5)
+}
+.start{font-size:18px;opacity:.9;margin-bottom:10px}
+#counter{font-size:30px;font-weight:bold;margin:15px 0;line-height:1.6}
+.message{font-size:20px;opacity:.9;font-style:italic}
 </style>
 </head>
-
 <body>
+
 <div class="container">
+  <div class="start">من هنا ابتدت أجمل حكاية — 28/11/2022</div>
   <div id="counter">جاري الحساب...</div>
   <div class="message">كل ثانية من وقتنا.. حكاية لا تنتهي</div>
 </div>
 
 <script>
-const startDate = new Date("2022-11-29T00:00:00");
+const start = new Date("2022-11-28T00:00:00");
 
-function updateCounter() {
-    const now = new Date();
-    const diff = now - startDate;
+function update(){
+  const now = new Date();
 
-    const seconds = Math.floor(diff / 1000) % 60;
-    const minutes = Math.floor(diff / (1000 * 60)) % 60;
-    const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const years = Math.floor(days / 365);
+  let years = now.getFullYear() - start.getFullYear();
+  let months = now.getMonth() - start.getMonth();
+  let days = now.getDate() - start.getDate();
+  let hours = now.getHours() - start.getHours();
+  let minutes = now.getMinutes() - start.getMinutes();
+  let seconds = now.getSeconds() - start.getSeconds();
 
-    document.getElementById("counter").innerHTML =
-        years + " سنة • " +
-        days + " يوم • " +
-        hours + " ساعة • " +
-        minutes + " دقيقة • " +
-        seconds + " ثانية";
+  if (seconds < 0){ seconds += 60; minutes--; }
+  if (minutes < 0){ minutes += 60; hours--; }
+  if (hours < 0){ hours += 24; days--; }
+
+  if (days < 0){
+    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    days += prevMonth;
+    months--;
+  }
+
+  if (months < 0){
+    months += 12;
+    years--;
+  }
+
+  document.getElementById("counter").innerHTML =
+    years + " سنة<br>" +
+    months + " شهر<br>" +
+    days + " يوم<br>" +
+    hours + " ساعة<br>" +
+    minutes + " دقيقة<br>" +
+    seconds + " ثانية";
 }
 
-setInterval(updateCounter, 1000);
-updateCounter();
+setInterval(update,1000);
+update();
 </script>
+
 </body>
 </html>
